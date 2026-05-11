@@ -1,7 +1,12 @@
 package com.takamori.spring.Calculate;
 
+import jakarta.validation.constraints.NotNull;
+
 public class CalcRequest {
-    public int a;
-    public int b;
-    public char op;
+    @NotNull
+    public Integer a;
+    @NotNull
+    public Integer b;
+    @NotNull
+    public String op;
 }

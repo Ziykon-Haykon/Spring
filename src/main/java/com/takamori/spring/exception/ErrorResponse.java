@@ -1,4 +1,4 @@
-package com.takamori.spring.error;
+package com.takamori.spring.exception;
 
 public class ErrorResponse {
     public String error;
