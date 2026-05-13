@@ -19,7 +19,7 @@ public class CalcHistory {
 
     private int b;
 
-    private char op;
+    private String op;
 
     private int result;
 }
