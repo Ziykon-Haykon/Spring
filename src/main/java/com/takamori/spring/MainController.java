@@ -3,8 +3,11 @@ package com.takamori.spring;
 import com.takamori.spring.Calculate.CalcRequest;
 import com.takamori.spring.Calculate.CalcResponse;
 import com.takamori.spring.Calculate.CalcService;
+import com.takamori.spring.entity.CalcHistory;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class MainController {
@@ -25,5 +28,10 @@ public class MainController {
         var response = new CalcResponse();
         response.result = result;
         return response;
+    }
+
+    @GetMapping("/history")
+    public List<CalcHistory> getHistory() {
+        return calcService.getHistory();
     }
 }

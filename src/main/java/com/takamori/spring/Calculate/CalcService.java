@@ -3,6 +3,8 @@ import com.takamori.spring.entity.CalcHistory;
 import com.takamori.spring.repository.CalcHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CalcService {
     private final CalcHistoryRepository repository;
@@ -32,5 +34,9 @@ public class CalcService {
 
         repository.save(history);
         return result;
+    }
+
+    public List<CalcHistory> getHistory() {
+        return repository.findAll();
     }
 }
