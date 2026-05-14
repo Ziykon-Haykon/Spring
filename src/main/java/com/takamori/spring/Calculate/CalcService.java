@@ -1,15 +1,16 @@
 package com.takamori.spring.Calculate;
 import com.takamori.spring.dto.CalcHistoryDto;
 import com.takamori.spring.entity.CalcHistory;
+import com.takamori.spring.mapper.CalcHistoryMapper;
 import com.takamori.spring.repository.CalcHistoryRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class CalcService {
     private final CalcHistoryRepository repository;
-    CalcHistoryDto historyDto = new CalcHistoryDto();
 
     public CalcService(CalcHistoryRepository repository) {
         this.repository = repository;
@@ -30,10 +31,6 @@ public class CalcService {
         };
         var history = new CalcHistory();
 
-        historyDto.setB(b);
-        historyDto.setA(a);
-        historyDto.setOp(op);
-        historyDto.setResult(result);
         history.setA(a);
         history.setB(b);
         history.setOp(op);
@@ -43,7 +40,14 @@ public class CalcService {
         return result;
     }
 
-    public CalcHistoryDto getHistory() {
-        return historyDto;
+    public List<CalcHistoryDto> getHistory() {
+        List<CalcHistory> histories = repository.findAll();
+        List<CalcHistoryDto> result = new ArrayList<>();
+
+        for (CalcHistory history : histories) {
+            CalcHistoryDto dto = CalcHistoryMapper.toDto(history);
+            result.add(dto);
+        }
+        return result;
     }
 }

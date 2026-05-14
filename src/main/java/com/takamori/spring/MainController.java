@@ -32,7 +32,7 @@ public class MainController {
     }
 
     @GetMapping("/history")
-    public CalcHistoryDto getHistory() {
+    public List<CalcHistoryDto> getHistory() {
         return calcService.getHistory();
     }
 }
