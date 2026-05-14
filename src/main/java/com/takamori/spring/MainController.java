@@ -3,6 +3,7 @@ package com.takamori.spring;
 import com.takamori.spring.Calculate.CalcRequest;
 import com.takamori.spring.Calculate.CalcResponse;
 import com.takamori.spring.Calculate.CalcService;
+import com.takamori.spring.dto.CalcHistoryDto;
 import com.takamori.spring.entity.CalcHistory;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
@@ -31,7 +32,7 @@ public class MainController {
     }
 
     @GetMapping("/history")
-    public List<CalcHistory> getHistory() {
+    public CalcHistoryDto getHistory() {
         return calcService.getHistory();
     }
 }

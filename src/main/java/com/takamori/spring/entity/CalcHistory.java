@@ -16,10 +16,7 @@ public class CalcHistory {
     private long id;
 
     private int a;
-
     private int b;
-
     private String op;
-
     private int result;
 }
