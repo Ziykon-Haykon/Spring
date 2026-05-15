@@ -50,4 +50,9 @@ public class CalcService {
         }
         return result;
     }
+
+    public CalcHistoryDto getHistoryById(long id) {
+        var history = repository.findById(id).orElseThrow();
+        return CalcHistoryMapper.toDto(history);
+    }
 }

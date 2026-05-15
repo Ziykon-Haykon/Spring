@@ -35,4 +35,9 @@ public class MainController {
     public List<CalcHistoryDto> getHistory() {
         return calcService.getHistory();
     }
+
+    @GetMapping("/history/{id}")
+    public CalcHistoryDto getHistoryById(@PathVariable("id") Long id) {
+        return calcService.getHistoryById(id);
+    }
 }
