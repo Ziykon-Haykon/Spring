@@ -3,7 +3,9 @@ import com.takamori.spring.dto.CalcHistoryDto;
 import com.takamori.spring.entity.CalcHistory;
 import com.takamori.spring.mapper.CalcHistoryMapper;
 import com.takamori.spring.repository.CalcHistoryRepository;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,17 +44,14 @@ public class CalcService {
 
     public List<CalcHistoryDto> getHistory() {
         List<CalcHistory> histories = repository.findAll();
-        List<CalcHistoryDto> result = new ArrayList<>();
-
-        for (CalcHistory history : histories) {
-            CalcHistoryDto dto = CalcHistoryMapper.toDto(history);
-            result.add(dto);
-        }
-        return result;
+        return histories.stream().map(CalcHistoryMapper::toDto).toList();
     }
 
     public CalcHistoryDto getHistoryById(long id) {
-        var history = repository.findById(id).orElseThrow(() -> new RuntimeException("History not found"));
+        var history = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "History not found"));
         return CalcHistoryMapper.toDto(history);
     }
 }
