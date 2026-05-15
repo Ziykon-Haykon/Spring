@@ -52,7 +52,7 @@ public class CalcService {
     }
 
     public CalcHistoryDto getHistoryById(long id) {
-        var history = repository.findById(id).orElseThrow();
+        var history = repository.findById(id).orElseThrow(() -> new RuntimeException("History not found"));
         return CalcHistoryMapper.toDto(history);
     }
 }
