@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -53,5 +52,15 @@ public class CalcService {
                         HttpStatus.NOT_FOUND,
                         "History not found"));
         return CalcHistoryMapper.toDto(history);
+    }
+
+    public void deleteHistory(long id) {
+        if (!repository.existsById(id)) {
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_FOUND,
+                    "History not found"
+            );
+        }
+        repository.deleteById(id);
     }
 }

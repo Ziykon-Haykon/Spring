@@ -40,4 +40,9 @@ public class MainController {
     public CalcHistoryDto getHistoryById(@PathVariable("id") Long id) {
         return calcService.getHistoryById(id);
     }
+
+    @DeleteMapping("/delete/{id}")
+    public void deleteHistoryById(@PathVariable("id") Long id) {
+        calcService.deleteHistory(id);
+    }
 }
