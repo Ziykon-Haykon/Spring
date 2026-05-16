@@ -26,8 +26,7 @@ public class CalcController {
 
     @PostMapping("/calc")
     public CalcResponse calculate(@RequestBody @Valid CalcRequest request) {
-        var response = calcService.calc(request);
-        return
+        return calcService.calc(request);
     }
 
     @GetMapping("/history")
