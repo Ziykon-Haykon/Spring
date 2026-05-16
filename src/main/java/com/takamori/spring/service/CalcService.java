@@ -1,4 +1,5 @@
-package com.takamori.spring.Calculate;
+package com.takamori.spring.service;
+import com.takamori.spring.dto.CalcRequest;
 import com.takamori.spring.dto.CalcHistoryDto;
 import com.takamori.spring.entity.CalcHistory;
 import com.takamori.spring.mapper.CalcHistoryMapper;
@@ -7,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -62,5 +64,18 @@ public class CalcService {
             );
         }
         repository.deleteById(id);
+    }
+
+    public CalcHistoryDto put(CalcRequest request, long id) {
+        var history = repository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "History not found"));
+        history.setA(request.getA());
+        history.setB(request.getB());
+        history.setOp(request.getOp());
+        history.setResult(calc(request.getA(), request.getB(), request.getOp()));
+        var saved = repository.save(history);
+        return CalcHistoryMapper.toDto(saved);
     }
 }

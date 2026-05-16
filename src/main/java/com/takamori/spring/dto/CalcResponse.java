@@ -1,4 +1,4 @@
-package com.takamori.spring.Calculate;
+package com.takamori.spring.dto;
 
 public class CalcResponse {
     public int result;

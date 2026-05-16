@@ -1,10 +1,9 @@
-package com.takamori.spring;
+package com.takamori.spring.controller;
 
-import com.takamori.spring.Calculate.CalcRequest;
-import com.takamori.spring.Calculate.CalcResponse;
-import com.takamori.spring.Calculate.CalcService;
+import com.takamori.spring.dto.CalcRequest;
+import com.takamori.spring.dto.CalcResponse;
+import com.takamori.spring.service.CalcService;
 import com.takamori.spring.dto.CalcHistoryDto;
-import com.takamori.spring.entity.CalcHistory;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +43,10 @@ public class MainController {
     @DeleteMapping("/delete/{id}")
     public void deleteHistoryById(@PathVariable("id") Long id) {
         calcService.deleteHistory(id);
+    }
+
+    @PutMapping("put/{id}")
+    public CalcHistoryDto putValueHistory(@PathVariable Long id,@RequestBody CalcRequest request) {
+        return calcService.put(request, id);
     }
 }
