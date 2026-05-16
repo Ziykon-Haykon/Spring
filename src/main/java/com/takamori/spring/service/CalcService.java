@@ -1,81 +1,17 @@
 package com.takamori.spring.service;
-import com.takamori.spring.dto.CalcRequest;
-import com.takamori.spring.dto.CalcHistoryDto;
-import com.takamori.spring.entity.CalcHistory;
-import com.takamori.spring.mapper.CalcHistoryMapper;
-import com.takamori.spring.repository.CalcHistoryRepository;
-import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Collections;
+import com.takamori.spring.dto.CalcHistoryDto;
+import com.takamori.spring.dto.CalcPatchRequest;
+import com.takamori.spring.dto.CalcRequest;
+import com.takamori.spring.dto.CalcResponse;
+
 import java.util.List;
 
-@Service
-public class CalcService {
-    private final CalcHistoryRepository repository;
-
-    public CalcService(CalcHistoryRepository repository) {
-        this.repository = repository;
-    }
-
-    public int calc(int a, int b, String op) {
-        int result = switch (op) {
-            case "*" -> a * b;
-            case "/" -> {
-                if (b == 0) {
-                    throw new IllegalArgumentException("Division by zero");
-                }
-                    yield a / b;
-            }
-            case "+" -> a + b;
-            case "-" -> a - b;
-            default -> throw new IllegalArgumentException("unknown operator " + op);
-        };
-        var history = new CalcHistory();
-
-        history.setA(a);
-        history.setB(b);
-        history.setOp(op);
-        history.setResult(result);
-
-        repository.save(history);
-        return result;
-    }
-
-    public List<CalcHistoryDto> getHistory() {
-        List<CalcHistory> histories = repository.findAll();
-        return histories.stream().map(CalcHistoryMapper::toDto).toList();
-    }
-
-    public CalcHistoryDto getHistoryById(long id) {
-        var history = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "History not found"));
-        return CalcHistoryMapper.toDto(history);
-    }
-
-    public void deleteHistory(long id) {
-        if (!repository.existsById(id)) {
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND,
-                    "History not found"
-            );
-        }
-        repository.deleteById(id);
-    }
-
-    public CalcHistoryDto put(CalcRequest request, long id) {
-        var history = repository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND,
-                        "History not found"));
-        history.setA(request.getA());
-        history.setB(request.getB());
-        history.setOp(request.getOp());
-        history.setResult(calc(request.getA(), request.getB(), request.getOp()));
-        var saved = repository.save(history);
-        return CalcHistoryMapper.toDto(saved);
-    }
+public interface CalcService {
+    CalcResponse calc(CalcRequest request);
+    List<CalcHistoryDto> getHistory();
+    CalcHistoryDto getHistoryById(long id);
+    void deleteHistory(long id);
+    CalcHistoryDto put(CalcRequest request, long id);
+    CalcHistoryDto patch(CalcPatchRequest request, long id);
 }

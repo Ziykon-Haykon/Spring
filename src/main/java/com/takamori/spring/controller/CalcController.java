@@ -1,5 +1,6 @@
 package com.takamori.spring.controller;
 
+import com.takamori.spring.dto.CalcPatchRequest;
 import com.takamori.spring.dto.CalcRequest;
 import com.takamori.spring.dto.CalcResponse;
 import com.takamori.spring.service.CalcService;
@@ -10,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-public class MainController {
+@RequestMapping("/api/calc")
+public class CalcController {
     private final CalcService calcService;
 
-    public MainController(CalcService calcService) {
+    public CalcController(CalcService calcService) {
         this.calcService = calcService;
     }
 
@@ -24,10 +26,8 @@ public class MainController {
 
     @PostMapping("/calc")
     public CalcResponse calculate(@RequestBody @Valid CalcRequest request) {
-        int result = calcService.calc(request.a, request.b, request.op);
-        var response = new CalcResponse();
-        response.result = result;
-        return response;
+        var response = calcService.calc(request);
+        return
     }
 
     @GetMapping("/history")
@@ -40,13 +40,18 @@ public class MainController {
         return calcService.getHistoryById(id);
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/history/{id}")
     public void deleteHistoryById(@PathVariable("id") Long id) {
         calcService.deleteHistory(id);
     }
 
-    @PutMapping("put/{id}")
+    @PutMapping("history/{id}")
     public CalcHistoryDto putValueHistory(@PathVariable Long id,@RequestBody CalcRequest request) {
         return calcService.put(request, id);
+    }
+
+    @PatchMapping("history/{id}")
+    public CalcHistoryDto patch(@PathVariable Long id, @RequestBody CalcPatchRequest request) {
+        return calcService.patch(request, id);
     }
 }
