@@ -8,9 +8,9 @@ import lombok.Setter;
 @Setter
 public class CalcRequest {
     @NotNull
-    public Integer a;
+    private Integer a;
     @NotNull
-    public Integer b;
+    private Integer b;
     @NotNull
-    public String op;
+    private String op;
 }

@@ -6,8 +6,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CalcHistoryDto {
-    private int a;
-    private int b;
+    private Long id;
+    private Integer a;
+    private Integer b;
     private String op;
-    private int result;
+    private Integer result;
 }

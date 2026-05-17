@@ -6,5 +6,5 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CalcResponse {
-    public int result;
+    private int result;
 }
