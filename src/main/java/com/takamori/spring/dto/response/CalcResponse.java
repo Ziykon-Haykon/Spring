@@ -1,4 +1,4 @@
-package com.takamori.spring.dto;
+package com.takamori.spring.dto.response;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,11 +1,13 @@
-package com.takamori.spring.service;
-import com.takamori.spring.dto.CalcPatchRequest;
-import com.takamori.spring.dto.CalcRequest;
-import com.takamori.spring.dto.CalcHistoryDto;
-import com.takamori.spring.dto.CalcResponse;
+package com.takamori.spring.service.impl;
+import com.takamori.spring.dto.request.CalcPatchRequest;
+import com.takamori.spring.dto.request.CalcRequest;
+import com.takamori.spring.dto.response.CalcHistoryDto;
+import com.takamori.spring.dto.response.CalcResponse;
 import com.takamori.spring.entity.CalcHistory;
 import com.takamori.spring.mapper.CalcHistoryMapper;
 import com.takamori.spring.repository.CalcHistoryRepository;
+import com.takamori.spring.service.CalcService;
+import com.takamori.spring.service.Calculator;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -15,10 +17,12 @@ import java.util.List;
 @Service
 public class CalcServiceImpl implements CalcService {
     private final CalcHistoryRepository repository;
-    private final Calculate calculate = new Calculate();
+    private final Calculator calculate = new Calculator();
+    private final CalcHistoryMapper mapper;
 
-    public CalcServiceImpl(CalcHistoryRepository repository) {
+    public CalcServiceImpl(CalcHistoryRepository repository, CalcHistoryMapper mapper) {
         this.repository = repository;
+        this.mapper = mapper;
     }
 
 
@@ -41,7 +45,7 @@ public class CalcServiceImpl implements CalcService {
 
     public List<CalcHistoryDto> getHistory() {
         List<CalcHistory> histories = repository.findAll();
-        return histories.stream().map(CalcHistoryMapper::toDto).toList();
+        return histories.stream().map(mapper::toDto).toList();
     }
 
     public CalcHistoryDto getHistoryById(long id) {
@@ -49,7 +53,7 @@ public class CalcServiceImpl implements CalcService {
                 .orElseThrow(() -> new ResponseStatusException(
                         HttpStatus.NOT_FOUND,
                         "History not found"));
-        return CalcHistoryMapper.toDto(history);
+        return mapper.toDto(history);
     }
 
     public void deleteHistory(long id) {
@@ -72,7 +76,7 @@ public class CalcServiceImpl implements CalcService {
         history.setOp(request.getOp());
         history.setResult(calculate.calculate(request.getA(), request.getB(), request.getOp()));
         var saved = repository.save(history);
-        return CalcHistoryMapper.toDto(saved);
+        return mapper.toDto(saved);
     }
 
     public CalcHistoryDto patch(CalcPatchRequest request, long id) {
@@ -93,6 +97,6 @@ public class CalcServiceImpl implements CalcService {
         if (request.getA() != null || request.getB() != null) {
             history.setResult(calculate.calculate(history.getA(), history.getB(), history.getOp()));
         }
-        return CalcHistoryMapper.toDto(history);
+        return mapper.toDto(history);
      }
 }

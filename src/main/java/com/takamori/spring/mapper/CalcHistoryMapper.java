@@ -1,17 +1,15 @@
 package com.takamori.spring.mapper;
 
-import com.takamori.spring.dto.CalcHistoryDto;
+import com.takamori.spring.dto.request.CalcRequest;
+import com.takamori.spring.dto.response.CalcHistoryDto;
 import com.takamori.spring.entity.CalcHistory;
+import org.mapstruct.Mapper;
 
-public class CalcHistoryMapper {
-    public static CalcHistoryDto toDto(CalcHistory history) {
-        CalcHistoryDto dto = new CalcHistoryDto();
+import java.util.List;
 
-        dto.setResult(history.getResult());
-        dto.setA(history.getA());
-        dto.setB(history.getB());
-        dto.setOp(history.getOp());
-
-        return dto;
-    }
+@Mapper(componentModel = "spring")
+public interface CalcHistoryMapper {
+    CalcHistoryDto toDto(CalcHistory history);
+    List<CalcHistoryDto> toDtoList(List<CalcHistory> histories);
+    CalcHistory toEntity(CalcRequest request);
 }

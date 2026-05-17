@@ -1,6 +1,6 @@
 package com.takamori.spring.service;
 
-public class Calculate {
+public class Calculator {
     public int calculate(int a, int b, String op) {
         return switch (op) {
             case "*" -> a * b;

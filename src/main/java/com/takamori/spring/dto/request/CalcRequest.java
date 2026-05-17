@@ -1,4 +1,4 @@
-package com.takamori.spring.dto;
+package com.takamori.spring.dto.request;
 
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

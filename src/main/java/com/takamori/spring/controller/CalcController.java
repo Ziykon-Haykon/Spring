@@ -1,10 +1,10 @@
 package com.takamori.spring.controller;
 
-import com.takamori.spring.dto.CalcPatchRequest;
-import com.takamori.spring.dto.CalcRequest;
-import com.takamori.spring.dto.CalcResponse;
+import com.takamori.spring.dto.request.CalcPatchRequest;
+import com.takamori.spring.dto.request.CalcRequest;
+import com.takamori.spring.dto.response.CalcResponse;
 import com.takamori.spring.service.CalcService;
-import com.takamori.spring.dto.CalcHistoryDto;
+import com.takamori.spring.dto.response.CalcHistoryDto;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
 

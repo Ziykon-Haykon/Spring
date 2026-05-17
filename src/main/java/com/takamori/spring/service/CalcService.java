@@ -1,9 +1,9 @@
 package com.takamori.spring.service;
 
-import com.takamori.spring.dto.CalcHistoryDto;
-import com.takamori.spring.dto.CalcPatchRequest;
-import com.takamori.spring.dto.CalcRequest;
-import com.takamori.spring.dto.CalcResponse;
+import com.takamori.spring.dto.response.CalcHistoryDto;
+import com.takamori.spring.dto.request.CalcPatchRequest;
+import com.takamori.spring.dto.request.CalcRequest;
+import com.takamori.spring.dto.response.CalcResponse;
 
 import java.util.List;
 
